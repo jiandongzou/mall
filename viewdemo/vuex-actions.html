@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script src="../node_modules/vuex/dist/vuex.js"></script>
+  <title>vue-x</title>
+</head>
+<body>
+<div id="app">
+  <h2>{{msg}}</h2>
+  <a href="javascript:;" @click="add">点击</a>
+  <counter></counter>
+</div>
+</body>
+<script>
+  var counter={
+    template:`<div>{{count}}</div>`,
+    computed:{
+      count(){
+        return this.$store.state.count
+      }
+    }
+
+  }
+  const store=new Vuex.Store({
+    state:{
+      count:13
+    },
+    mutations:{
+      increament(state){
+        state.count++;
+      }
+    },
+    actions:{
+      increaaction(context){
+        context.commit("increament");
+      }
+    }
+  })
+  new Vue({
+    el:"#app",
+    store:store,
+    data:{
+      msg:"vuex -mutations的使用"
+
+    },
+    components:{
+      counter
+    },
+    methods:{
+      add(){
+        this.$store.dispatch('increaaction')
+      }
+    }
+  })
+</script>
+</html>

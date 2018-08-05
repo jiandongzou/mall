@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script src="../node_modules/axios/dist/axios.js"></script>
+</head>
+<body>
+  <div id="app">
+      <h2>axios-实例</h2>
+     <button  type="button" class="btn btn-primary" @click="get">get请求</button>
+     <button  type="button" class="btn btn-primary" @click="post">post请求</button>
+     <button  type="button" class="btn btn-primary" @click="http">http请求</button>
+    <div>
+       <span>{{msg}}</span>
+    </div>
+  </div>
+
+</body>
+<script>
+   var vue =new Vue({
+       el:"#app",
+       data:{
+          msg:''
+       },
+      mounted:function(){
+        axios.interceptors.request.use(function(config){
+                console.log(config);
+             return config;
+
+        });
+        axios.interceptors.response.use(function(response){
+          console.log(response);
+          return response;
+
+        })
+
+
+      },
+      methods:{
+          get:function(){
+            axios.get("../package.json",{
+              params:{
+                userId:999
+              },
+              headers:{
+                token:"jack"
+              }
+            }).then(res=>{
+              this.msg=res.data
+          }).catch(error=>{
+              console.log(error)
+            })
+          },
+          post:function(){
+            axios.post("../package2.json",{
+             params:{
+               userId:888
+              },
+              headers:{
+                token:"tom"
+              }
+            }).then(res=>{
+              this.msg=res.data
+            }).catch(function(error){
+               console.log(error);
+            })
+          },
+          http:function(){
+             axios({
+               url:"../package.json",
+               method:"post",
+               data:{
+                 userId:"101"
+               },                    //http请求 get请求用params，post请求用的是data；
+               params:{
+                 userId:"102"
+               },
+               headers:{
+                 token:"mary"
+               }
+             }).then(function(res){
+                console.log(res)
+               console.log(this)
+               vue.msg=res.data;//箭头函数里的this指向的是vue实例，非箭头函数指向window；
+             })
+          }
+      }
+    }
+  )
+</script>
+</html>

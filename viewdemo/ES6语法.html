@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script>
+
+  </script>
+</head>
+ <div>
+   <h2>ES6-基本语法</h2>
+
+ </div>
+<body>
+<script>
+  let sum= (...m)=>{
+    let total=0;
+    for(var i of m){
+      total +=i;
+    }
+    console.log(`total:${total}`);
+  };
+  sum(4,5,6);
+  let arr1=[1,2];
+  let arr2=[3,4];
+  //(...arr1,...arr2);
+  console.log([...arr1,...arr2])//合并数组
+  let xy= [..."es6"]
+</script>
+</body>
+
+</html>

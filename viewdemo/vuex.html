@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <script src="../node_modules/vue/dist/vue.js"></script>
+     <script src="../node_modules/vuex/dist/vuex.js"></script>
+    <title>vue-x</title>
+</head>
+<body>
+  <div id="app">
+      <h2>{{msg}}</h2>
+
+    <counter v-bind:count="count"></counter>
+  </div>
+</body>
+<script>
+ var counter={
+    template:`<div>{{count}}</div>`,
+    /*computed:{
+      count(){
+        return this.$store.state.count
+      }
+    }*/
+   props:["count"]
+  }
+    const store=new Vuex.Store({
+        state:{
+          count:10
+        },
+        mutations:{
+          increament(state){
+            state.count++;
+          }
+        }
+    })
+   new Vue({
+     el:"#app",
+    /* store:store,*/
+     data:{
+        msg:"vue-x的使用",
+        count:18,
+     },
+    components:{
+       counter
+     }
+    /*methods:{
+       add(){
+          store.commit('increment')
+       }
+     }*/
+   })
+</script>
+</html>
